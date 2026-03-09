@@ -1,0 +1,67 @@
+-- base de datos  
+-- sebastian cristobal
+-- 6 de marzo 2026 - v01 (inpe)
+
+use master;
+go
+
+if db_id('BdInpe') is not null
+    drop database BdInpe;
+go
+
+create database BdInpe;
+go
+
+use BdInpe;
+go
+
+create table TAño (
+    IdAño int primary key identity(1,1),
+    InicioAño date not null,
+    FinAño date not null,
+    UsuarioRegistro varchar(50) not null
+);
+
+create table TTurno (
+    IdTurno int primary key identity(1,1),
+    NombreTurno varchar(50) not null,
+    InicioTurno time not null,
+    FinTurno time not null,
+    IdAño int not null,
+    UsuarioRegistro varchar(50) not null,
+    foreign key (IdAño) references TAño(IdAño)
+);
+
+create table TEmpleado (
+    IdEmpleado int primary key identity(1,1),
+    TipoDocumento varchar(20) not null,
+    NroDocumento varchar(20) not null unique,
+    Nombres varchar(100) not null,
+    Paterno varchar(100),
+    Materno varchar(100),
+    Celular char(9),
+    CorreoElectronico varchar(100),
+    Cargo varchar(50),
+    Area varchar(50),
+    FechaContratacion date,
+    Estado varchar(20) default 'Activo',
+    UsuarioRegistro varchar(50) not null,
+    IdSupervisor int null,
+    foreign key (IdSupervisor) references TEmpleado(IdEmpleado)
+);
+
+create table TAsistencia (
+    IdAsistencia int primary key identity(1,1),
+    Fecha date not null,
+    Dia varchar(20) not null,
+    EsFeriado bit default 0,
+    Asistio bit default 1,
+    Tardo bit default 0,
+    HoraEntrada time,
+    HoraSalida time,
+    IdEmpleado int not null,
+    IdTurno int not null,
+    UsuarioRegistro varchar(50) not null,
+    foreign key (IdEmpleado) references TEmpleado(IdEmpleado),
+    foreign key (IdTurno) references TTurno(IdTurno)
+);
