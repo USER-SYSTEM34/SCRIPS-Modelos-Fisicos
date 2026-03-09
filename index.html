@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMANDO CMD · Infografía Élite · Modelado Físico SGBD</title>
+    <!-- Font Awesome 6 (Pro icons + duotone style) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Oxanium + Inter (futurista pero legible) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,800&family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0c1a2b, #03060b);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        /* contenedor principal glassmorphism + neones */
+        .infografia-premium {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(12, 25, 45, 0.65);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            border-radius: 3.5rem;
+            box-shadow: 0 30px 70px -15px rgba(0,0,0,0.9), 0 0 0 1px rgba(0, 255, 255, 0.2) inset, 0 0 30px rgba(0, 180, 255, 0.3);
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* efecto de líneas de circuito (sutil) */
+        .infografia-premium::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* header con gradiente cyber */
+        .cyber-header {
+            background: rgba(0, 15, 30, 0.9);
+            padding: 2rem 3rem 1.8rem 3rem;
+            border-bottom: 2px solid #00f0ff;
+            box-shadow: 0 10px 30px -8px #00ffff33;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .universidad-badge {
+            display: flex;
+            flex-direction: column;
+            border-left: 5px solid #00e0ff;
+            padding-left: 1.8rem;
+        }
+
+        .universidad-badge small {
+            color: #9fc9ff;
+            font-weight: 400;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .universidad-badge h2 {
+            font-family: 'Oxanium', monospace;
+            font-weight: 700;
+            font-size: 1.9rem;
+            color: white;
+            text-shadow: 0 0 8px cyan;
+            line-height: 1.2;
+            margin-top: 0.2rem;
+        }
+
+        .cmd-badge {
+            background: #001d3d;
+            border-radius: 60px;
+            padding: 0.8rem 2rem 0.8rem 2rem;
+            border: 1px solid #00ccff;
+            box-shadow: 0 0 15px #00b7ff;
+            font-family: 'Oxanium', monospace;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cmd-badge i {
+            font-size: 2.3rem;
+            color: #5ee0ff;
+            filter: drop-shadow(0 0 5px cyan);
+        }
+
+        /* subtítulos decorativos */
+        .docente-info {
+            display: flex;
+            gap: 2rem;
+            color: #d0e2ff;
+            padding: 0.8rem 3rem;
+            background: rgba(0, 255, 255, 0.05);
+            border-bottom: 1px dashed #00a6ff;
+            font-weight: 500;
+        }
+
+        .docente-info i {
+            color: #0ff;
+            margin-right: 6px;
+        }
+
+        /* GRID PRINCIPAL (3 columnas robustas) */
+        .grid-3d {
+            display: grid;
+            grid-template-columns: 1.1fr 0.95fr 1.2fr;
+            gap: 1.5rem;
+            padding: 2rem 2.5rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* tarjetas con efecto cristal + borde neón */
+        .card-neon {
+            background: rgba(8, 20, 36, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 2.5rem;
+            padding: 1.8rem 1.8rem;
+            box-shadow: 0 20px 40px -15px #000, 0 0 0 1px rgba(0, 255, 255, 0.2) inset;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card-neon:hover {
+            transform: translateY(-8px);
+            border-color: #7df0ff;
+            box-shadow: 0 30px 50px -20px #000, 0 0 30px #00ffff66;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 2px solid #0077be;
+            padding-bottom: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header i {
+            font-size: 2.5rem;
+            color: #0ef;
+            filter: drop-shadow(0 0 8px cyan);
+            background: rgba(0,255,255,0.1);
+            padding: 0.5rem;
+            border-radius: 18px;
+        }
+
+        .card-header h3 {
+            font-family: 'Oxanium', cursive;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #0ff;
+        }
+
+        /* objetivos */
+        .objetivo-general {
+            background: #021c2f;
+            border-radius: 40px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.7rem;
+            border-left: 8px solid #0ef;
+            color: white;
+        }
+
+        .lista-obj li {
+            color: #e0f0ff;
+            margin-bottom: 0.8rem;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .lista-obj i.fa-circle-check { color: #0ef; font-size: 1.2rem; }
+
+        /* integrantes bloque */
+        .integrantes-grid-premium {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+
+        .chip-integrante {
+            background: rgba(0, 30, 50, 0.8);
+            border: 1px solid #0ef3ff;
+            border-radius: 40px;
+            padding: 0.6rem 1rem 0.6rem 1.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .porcentaje-flash {
+            background: #00d0ff;
+            color: #010b14;
+            font-weight: 800;
+            padding: 0.15rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        /* SGBD list */
+        .sgbd-premium {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+
+        .sgbd-item {
+            display: flex;
+            align-items: center;
+            background: #061e30;
+            border-radius: 60px;
+            padding: 0.4rem 1rem 0.4rem 0.4rem;
+            border: 1px solid #0af;
+            box-shadow: 0 0 10px #00a6ff4d;
+        }
+
+        .sgbd-icon-circle {
+            width: 48px; height: 48px;
+            background: #002b4b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            border: 1px solid #0ef;
+        }
+
+        .sgbd-icon-circle i { font-size: 2rem; }
+        .sgbd-details { flex: 1; color: white; }
+        .sgbd-nombre { font-weight: 700; font-size: 1.2rem; }
+        .sgbd-desc { font-size: 0.8rem; opacity: 0.8; }
+
+        /* repo destacado */
+        .repo-ultra {
+            background: linear-gradient(145deg, #002244, #001122);
+            border-radius: 40px;
+            padding: 1rem 1.8rem;
+            margin: 1.5rem 0 0.5rem;
+            border: 1px solid cyan;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .repo-ultra i { font-size: 3.2rem; color: #0ff; }
+
+        .repo-link {
+            font-family: 'Oxanium', monospace;
+            font-size: 1.2rem;
+            background: #001e33;
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
+            color: #9eefff;
+            border: 1px solid #0ff;
+            word-break: break-all;
+        }
+
+        /* conclusiones item */
+        .conclusion-item {
+            background: rgba(0, 128, 255, 0.07);
+            border-radius: 40px;
+            padding: 0.7rem 1rem 0.7rem 1.5rem;
+            margin-bottom: 0.7rem;
+            color: white;
+            border-left: 5px solid #0ef;
+            font-size: 0.9rem;
+        }
+
+        /* bases de datos flotantes */
+        .db-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .db-chip {
+            background: #003d66;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            color: white;
+            border: 1px solid #0ff;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* footer espectacular */
+        .footer-cmd {
+            background: rgba(0, 8, 20, 0.95);
+            padding: 1.5rem 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #0ef;
+            box-shadow: 0 -10px 30px #0ff1;
+            color: #d3eaff;
+            z-index: 5;
+            position: relative;
+        }
+
+        .footer-cmd a {
+            color: #93f0ff;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dotted cyan;
+        }
+
+        /* animación de brillo */
+        .glow-text {
+            animation: glowPulse 3s infinite;
+        }
+
+        @keyframes glowPulse {
+            0% { text-shadow: 0 0 2px cyan; }
+            50% { text-shadow: 0 0 12px #00ffff, 0 0 25px #00a6ff; }
+            100% { text-shadow: 0 0 2px cyan; }
+        }
+    </style>
+</head>
+<body>
+<div class="infografia-premium">
+
+    <!-- HEADER ÉLITE -->
+    <div class="cyber-header">
+        <div class="universidad-badge">
+            <small>UNIVERSIDAD ANDINA DEL CUSCO</small>
+            <h2>FACULTAD DE INGENIERÍA Y ARQUITECTURA</h2>
+            <div style="color:#9ad0ff; margin-top: 0.3rem; font-weight: 600;">ESCUELA PROFESIONAL DE INGENIERÍA DE SISTEMAS</div>
+        </div>
+        <div class="cmd-badge">
+            <i class="fas fa-terminal"></i> COMANDO CMD
+        </div>
+    </div>
+
+    <!-- barra docente / fecha -->
+    <div class="docente-info">
+        <span><i class="fas fa-chalkboard-user"></i> DOCENTE: Ing. Hugo Espetia Huamanga</span>
+        <span><i class="fas fa-calendar-check"></i> 6 MARZO 2026 · v01 (INPE · DON GALLINO · ELECTRO TRACK)</span>
+        <span><i class="fas fa-code-branch"></i> MODELOS 2 AL 8</span>
+    </div>
+
+    <!-- CUERPO PRINCIPAL 3 COLUMNAS -->
+    <div class="grid-3d">
+
+        <!-- COLUMNA 1: OBJETIVOS + INTRO -->
+        <div class="card-neon">
+            <div class="card-header">
+                <i class="fas fa-bullseye"></i>
+                <h3>OBJETIVOS</h3>
+            </div>
+            <div class="objetivo-general">
+                <i class="fas fa-flag-checkered" style="color:#0ef; margin-right: 8px;"></i>
+                <strong style="color:white;">General:</strong> Implementar modelo físico en Oracle, SQL Server, MySQL, PostgreSQL.
+            </div>
+            <ul class="lista-obj" style="list-style: none; margin-bottom: 2rem;">
+                <li><i class="fa-regular fa-circle-check"></i> Convertir modelos conceptuales 2→8 a físicos</li>
+                <li><i class="fa-regular fa-circle-check"></i> Scripts creación/inserción para 4 SGBD</li>
+                <li><i class="fa-regular fa-circle-check"></i> Documentar diferencias sintácticas</li>
+                <li><i class="fa-regular fa-circle-check"></i> Publicar en GitHub</li>
+                <li><i class="fa-regular fa-circle-check"></i> Lecciones aprendidas · presentación en clase</li>
+            </ul>
+            <div class="card-header" style="margin-top: 0.5rem;">
+                <i class="fas fa-scroll"></i>
+                <h3>INTRO</h3>
+            </div>
+            <p style="color: #cfecff; line-height: 1.6; font-size: 0.95rem;">Transformación de modelos conceptuales en estructuras físicas sobre <strong>Super Giros, INPE, Don Gallino, ElectroTrack, Los Ángeles, Titanium, MacSalud</strong>. Se analizan diferencias de sintaxis y se generan scripts SQL para cada motor.</p>
+        </div>
+
+        <!-- COLUMNA 2: EQUIPO + SGBD + REPO + FRAGMENTOS -->
+        <div class="card-neon">
+            <div class="card-header">
+                <i class="fas fa-users"></i>
+                <h3>COMANDO CMD</h3>
+            </div>
+            <div class="integrantes-grid-premium">
+                <div class="chip-integrante"><span>Achahui Zans Sebastian</span><span class="porcentaje-flash">100%</span></div>
+                <div class="chip-integrante"><span>Chuquitapa Flores Kefren</span><span class="porcentaje-flash">100%</span></div>
+                <div class="chip-integrante"><span>Portugal Castillo Olger</span><span class="porcentaje-flash">100%</span></div>
+                <div class="chip-integrante"><span>Callo Gastañaga Carlos</span><span class="porcentaje-flash">100%</span></div>
+            </div>
+
+            <!-- SGBD con estilo -->
+            <div class="card-header" style="margin-top: 1.8rem;">
+                <i class="fas fa-database"></i>
+                <h3>SGBD IMPLEMENTADOS</h3>
+            </div>
+            <div class="sgbd-premium">
+                <div class="sgbd-item">
+                    <div class="sgbd-icon-circle"><i class="fab fa-oracle" style="color:#ff6b5b;"></i></div>
+                    <div class="sgbd-details"><span class="sgbd-nombre">Oracle</span><div class="sgbd-desc">Secuencias, robustez empresarial, mayor control</div></div>
+                </div>
+                <div class="sgbd-item">
+                    <div class="sgbd-icon-circle"><i class="fas fa-database" style="color:#e63c3c;"></i></div>
+                    <div class="sgbd-details"><span class="sgbd-nombre">SQL Server</span><div class="sgbd-desc">Intuitivo, identity, integración MS</div></div>
+                </div>
+                <div class="sgbd-item">
+                    <div class="sgbd-icon-circle"><i class="fab fa-mysql" style="color:#f7a13d;"></i></div>
+                    <div class="sgbd-details"><span class="sgbd-nombre">MySQL</span><div class="sgbd-desc">Curva baja, similar a PostgreSQL</div></div>
+                </div>
+                <div class="sgbd-item">
+                    <div class="sgbd-icon-circle"><i class="fab fa-postgresql" style="color:#5898ff;"></i></div>
+                    <div class="sgbd-details"><span class="sgbd-nombre">PostgreSQL</span><div class="sgbd-desc">Tipos avanzados, estándar SQL</div></div>
+                </div>
+            </div>
+
+            <!-- REPOSITORIO GITHUB LLAMATIVO -->
+            <div class="repo-ultra">
+                <i class="fab fa-github"></i>
+                <div style="flex: 1;">
+                    <div style="color:#aaf0ff;">repositorio oficial</div>
+                    <div class="repo-link"><i class="fas fa-link"></i> github.com/comando-cmd/bd-fisico</div>
+                </div>
+            </div>
+            <!-- snippet corto estilo terminal -->
+            <div style="background:#001d33; border-radius: 20px; padding: 0.8rem 1rem; font-family: 'Courier New', monospace; border: 1px solid cyan; color: #b3f0ff; font-size: 0.7rem;">
+                > use BdSuperGiros; <span style="color:#5eff9b;">GO</span> <br>
+                > CREATE TABLE TCliente ( IdCliente INT IDENTITY PRIMARY KEY, TipoDocumento VARCHAR(20) NOT NULL , ... )
+            </div>
+        </div>
+
+        <!-- COLUMNA 3: CONCLUSIONES + REFERENCIAS + BASES -->
+        <div class="card-neon">
+            <div class="card-header">
+                <i class="fas fa-microchip"></i>
+                <h3>CONCLUSIONES</h3>
+            </div>
+            <div class="conclusion-item"><i class="fas fa-caret-right" style="color: #0ef;"></i> Implementación en 4 SGBD evidencia diferencias profundas de sintaxis.</div>
+            <div class="conclusion-item"><i class="fas fa-caret-right" style="color: #0ef;"></i> Oracle: mayor configuración (secuencias), robusto.</div>
+            <div class="conclusion-item"><i class="fas fa-caret-right" style="color: #0ef;"></i> MySQL/PostgreSQL: curva baja, similitudes, pero detalles en tipos.</div>
+            <div class="conclusion-item"><i class="fas fa-caret-right" style="color: #0ef;"></i> SQL Server: intuitivo, identity, ideal para entornos Windows.</div>
+            <div class="conclusion-item"><i class="fas fa-caret-right" style="color: #0ef;"></i> Estandarización de nombres y tipos minimiza errores de migración.</div>
+            <div class="conclusion-item"><i class="fas fa-caret-right" style="color: #0ef;"></i> Trabajo colaborativo por SGBD = cobertura eficiente.</div>
+
+            <!-- BBDD creadas (para que vea la variedad) -->
+            <div class="card-header" style="margin-top: 0.8rem;">
+                <i class="fas fa-cloud"></i>
+                <h3>BASES CREADAS</h3>
+            </div>
+            <div class="db-cloud">
+                <span class="db-chip">BdSuperGiros</span>
+                <span class="db-chip">BdInpe</span>
+                <span class="db-chip">BdDonGallino</span>
+                <span class="db-chip">BdElectroTrack</span>
+                <span class="db-chip">BDLosAngeles</span>
+                <span class="db-chip">BDTitanium</span>
+                <span class="db-chip">MacSalud</span>
+            </div>
+
+            <!-- referencias breve -->
+            <div style="background:#002b44; border-radius: 30px; padding: 0.9rem 1.5rem; border:1px solid cyan; color: #b5e2ff; margin-top: 1rem;">
+                <i class="fas fa-book-open" style="color:#0ef;"></i>  REFS: Oracle Docs · Microsoft T-SQL · MySQL 8.0 · PostgreSQL 16 · Elmasri/Navathe
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL EXTRA: CASOS DE ESTUDIO CON NOMBRES PROYECTO (como imagen textual) -->
+    <div style="padding: 1rem 2.5rem 1.8rem 2.5rem; display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center;">
+        <div style="background: linear-gradient(120deg, #002244, #00182e); border-radius: 70px; padding: 0.8rem 2rem; border: 1px solid cyan; color: white; font-weight: 600;"><i class="fas fa-building-columns"></i> INPE · v01 (Sebastian)</div>
+        <div style="background: linear-gradient(120deg, #002244, #00182e); border-radius: 70px; padding: 0.8rem 2rem; border: 1px solid cyan; color: white; font-weight: 600;"><i class="fas fa-drumstick-bite"></i> DON GALLINO · categorías/producto</div>
+        <div style="background: linear-gradient(120deg, #002244, #00182e); border-radius: 70px; padding: 0.8rem 2rem; border: 1px solid cyan; color: white; font-weight: 600;"><i class="fas fa-bolt"></i> ELECTRO TRACK · proveedores</div>
+        <div style="background: linear-gradient(120deg, #002244, #00182e); border-radius: 70px; padding: 0.8rem 2rem; border: 1px solid cyan; color: white; font-weight: 600;"><i class="fas fa-receipt"></i> LOS ÁNGELES · facturación</div>
+    </div>
+
+    <!-- FOOTER CON EFECTO TERMINAL -->
+    <div class="footer-cmd">
+        <div><i class="fas fa-code"></i> scripts SQL · Oracle | SQL Server | MySQL | PostgreSQL</div>
+        <div><i class="fab fa-github"></i> <a href="#">github.com/comando-cmd/bd-fisico</a> <i class="fas fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></div>
+        <div><i class="fas fa-shield-halved"></i> 100% participación</div>
+    </div>
+
+    <!-- marca de agua tecnológica -->
+    <div style="text-align: right; padding: 0.4rem 2.5rem; background: rgba(0,0,0,0.3); color: #005f8c; font-size: 0.7rem; letter-spacing: 3px;">
+        <i class="fas fa-database"></i> MODELO FÍSICO · SISTEMAS GESTORES · COMANDO CMD · 2026
+    </div>
+</div>
+</body>
+</html>
