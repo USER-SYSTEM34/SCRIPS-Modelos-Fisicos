@@ -1,0 +1,79 @@
+-- base de datos  
+-- sebastian cristobal
+-- 6 de marzo 2026 - v01 (electro track)
+
+use master;
+go
+
+if db_id('BdElectroTrack') is not null
+    drop database BdElectroTrack;
+go
+
+create database BdElectroTrack;
+go
+
+use BdElectroTrack;
+go
+
+create table TProveedor (
+    IdProveedor int primary key identity(1,1),
+    RazonSocial varchar(100) not null,
+    Direccion varchar(200),
+    Telefono char(9),
+    CorreoElectronico varchar(100),
+    UsuarioRegistro varchar(50) not null
+);
+
+create table TOrdenCompra (
+    IdOrden int primary key identity(1,1),
+    FechaHora datetime default getdate(),
+    Total decimal(12,2) not null check (Total >= 0),
+    IdProveedor int not null,
+    UsuarioRegistro varchar(50) not null,
+    foreign key (IdProveedor) references TProveedor(IdProveedor)
+);
+
+create table TElectrodomestico (
+    IdElectrodomestico int primary key identity(1,1),
+    Nombre varchar(100) not null,
+    Marca varchar(50),
+    Modelo varchar(50),
+    PrecioVenta decimal(12,2) not null check (PrecioVenta > 0),
+    PrecioCompra decimal(12,2) not null check (PrecioCompra > 0),
+    UsuarioRegistro varchar(50) not null
+);
+
+create table TCliente (
+    IdCliente int primary key identity(1,1),
+    TipoDocumento varchar(20),
+    NroDocumento varchar(20) unique,
+    Nombres varchar(100),
+    Paterno varchar(100),
+    Materno varchar(100),
+    Celular char(9),
+    CorreoElectronico varchar(100),
+    Direccion varchar(200),
+    UsuarioRegistro varchar(50) not null
+);
+
+create table TComprobante (
+    IdComprobante int primary key identity(1,1),
+    Tipo varchar(20),
+    FechaHora datetime default getdate(),
+    Total decimal(12,2) not null check (Total >= 0),
+    IdCliente int not null,
+    UsuarioRegistro varchar(50) not null,
+    foreign key (IdCliente) references TCliente(IdCliente)
+);
+
+create table TDetalleIngresoSalida (
+    IdDetalle int primary key identity(1,1),
+    Tipo varchar(20) not null, -- ingreso o salida
+    Cantidad int not null check (Cantidad > 0),
+    SubTotal decimal(12,2) not null check (SubTotal >= 0),
+    IdOrden int,
+    IdElectrodomestico int not null,
+    UsuarioRegistro varchar(50) not null,
+    foreign key (IdOrden) references TOrdenCompra(IdOrden),
+    foreign key (IdElectrodomestico) references TElectrodomestico(IdElectrodomestico)
+);
