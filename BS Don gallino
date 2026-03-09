@@ -1,0 +1,67 @@
+-- base de datos  
+-- sebastian cristobal
+-- 6 de marzo 2026 - v01 (don gallino)
+
+use master;
+go
+
+if db_id('BdDonGallino') is not null
+    drop database BdDonGallino;
+go
+
+create database BdDonGallino;
+go
+
+use BdDonGallino;
+go
+
+create table TCategoria (
+    IdCategoria int primary key identity(1,1),
+    Nombre varchar(50) not null,
+    Descripcion varchar(200),
+    UsuarioRegistro varchar(50) not null
+);
+
+create table TProducto (
+    IdProducto int primary key identity(1,1),
+    Nombre varchar(100) not null,
+    Descripcion varchar(200),
+    PrecioReferencial decimal(10,2) not null check (PrecioReferencial > 0),
+    IdCategoria int not null,
+    UsuarioRegistro varchar(50) not null,
+    foreign key (IdCategoria) references TCategoria(IdCategoria)
+);
+
+create table TCliente (
+    IdCliente int primary key identity(1,1),
+    TipoDocumento varchar(20),
+    NroDocumento varchar(20) unique,
+    Nombres varchar(100),
+    Paterno varchar(100),
+    Materno varchar(100),
+    Celular char(9),
+    CorreoElectronico varchar(100),
+    Direccion varchar(200),
+    UsuarioRegistro varchar(50) not null
+);
+
+create table TComprobante (
+    IdComprobante int primary key identity(1,1),
+    FechaHora datetime default getdate(),
+    Total decimal(10,2) not null check (Total >= 0),
+    IdCliente int not null,
+    UsuarioRegistro varchar(50) not null,
+    foreign key (IdCliente) references TCliente(IdCliente)
+);
+
+create table TDetalle (
+    IdDetalle int primary key identity(1,1),
+    Cantidad int not null check (Cantidad > 0),
+    PrecioUnitario decimal(10,2) not null check (PrecioUnitario > 0),
+    SubTotal decimal(10,2) not null check (SubTotal >= 0),
+    IdComprobante int not null,
+    IdProducto int not null,
+    UsuarioRegistro varchar(50) not null,
+    foreign key (IdComprobante) references TComprobante(IdComprobante),
+    foreign key (IdProducto) references TProducto(IdProducto)
+);
